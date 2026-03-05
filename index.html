@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NLM grp tuition teacher</title>
+
+<style>
+
+/* ====== 基础设定 ====== */
+body {
+    margin: auto;
+    font-family: Arial, sans-serif;
+    background: #f5f6fa;
+	display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+.wrapper {
+    width: 100%;
+    /*max-width: 1200px;   控制页面宽度 */
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+/* ====== Responsive Banner ====== */
+.banner {
+    width: 100%;
+    height: 256px;
+    background: linear-gradient(to right, #f5ede4, #f6ede3);
+	/*background: #000;*/
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+.content {
+	display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+	width: 100%;
+}
+/*@media (max-width: 768px) {
+    .banner {
+        height: 160px;
+        font-size: 20px;
+    }
+}*/
+
+/* ====== 搜索栏 ====== */
+.search-container {
+    text-align: center;
+    margin: 20px;
+}
+
+.search-box {
+    position: relative;
+    display: inline-block;
+    /*width: 80%;*/
+    max-width: 400px;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 10px 40px 10px 15px; /* 右边留空间给 X */
+    border-radius: 25px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+	.button {
+		text-align: center;
+    box-sizing: border-box;
+	}
+		.button a{
+		width: 250px;
+		padding: 10px 25px; /* 右边留空间给 X */
+		border-radius: 25px;
+		background: #f6ede3;
+		color: #333;
+		text-align: center;
+		border: 1px solid #ccc;
+		font-size: 16px;
+		box-sizing: border-box;
+		}
+/* X 按钮 */
+.clear-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    color: #999;
+    display: none;
+}
+
+.clear-btn:hover {
+    color: #333;
+}
+
+/* ====== Table 样式 ====== */
+.table-container {
+    width:60%;
+    margin: auto;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #f0f0f0;
+}
+	td:nth-of-type(4){white-space: nowrap;}
+/* ====== 搜索高亮效果 ====== */
+.highlight {
+    background-color: rgba(173, 216, 230, 0.4); /* 半透明浅蓝 */
+}
+	
+@media (min-width: 993px) and (max-width: 1200px) {
+	.table-container {
+		width:90%;
+		margin: auto;
+    	overflow-x: auto;}}
+@media (min-width: 769px) and (max-width: 992px) {
+	.table-container {
+		width:100%;
+		margin: auto;
+    	overflow-x: auto;}
+	}
+/* ====== Mobile View 改成竖排卡片 ====== */
+
+@media (max-width: 768px) {
+	.table-container {
+		width:100%;
+		margin: auto;
+    	overflow-x: auto;}
+
+    table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        background: white;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    td {
+        border: none;
+        position: relative;
+        padding-left: 50%;
+        text-align: left;
+    }
+
+    td::before {
+        position: absolute;
+        left: 15px;
+        top: 12px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    td:nth-of-type(1)::before { content: "Subject"; }
+    td:nth-of-type(2)::before { content: "online or offline"; }
+    td:nth-of-type(3)::before { content: "Teacher's name"; }
+    td:nth-of-type(4)::before { content: "Contact"; }
+    td:nth-of-type(5)::before { content: "Location"; }
+    td:nth-of-type(6)::before { content: "SMK/independence/IGCSE"; }
+}
+
+</style>
+</head>
+<body>
+<div class="wrapper">
+	<!-- Banner -->
+	<div class="banner">
+		<img class="width:100%" src="https://lh3.google.com/u/0/d/1Lr22jRXPhuh9EJZzNrg0aNlTat7c5nMy=w1920-h945-iv1?auditContext=prefetch">
+	</div>
+
+	<!-- 搜索栏 -->
+	<div class="content">
+		<div class="search-container">
+			<div class="search-box">
+				<input type="text" id="searchInput" placeholder="搜索资料..." onkeyup="searchTable()">
+				<span class="clear-btn" onclick="clearSearch()">✕</span>
+			</div>
+		</div>
+
+		<!-- Table -->
+		<div class="table-container">
+		<table id="dataTable">
+			<thead>
+				<tr>
+					<th>Subject<br>(科目)</th>
+					<th>online or offline<br>(线上/线下)</th>
+					<th>Teacher's name<br>(老师)</th>
+					<th>Contact<br>(联络方式)</th>
+					<th>Location<br>(地点)</th>
+					<th>SMK/independence/IGCSE<br>(国中/ 独中/IGCSE)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Math and Add Math</td>
+					<td>online and offline</td>
+					<td>Teacher Tuan</td>
+					<td>013-3636808</td>
+					<td>Setapak<br>Selayang</td>
+					<td>SMK<br>independence</td>
+				</tr>
+				<tr>
+					<td>国文、英文</td>
+					<td>online</td>
+					<td>林老师</td>
+					<td>018-3888207</td>
+					<td>Kuala Lumpur</td>
+					<td>SMK<br>independence </td>
+				</tr>
+				<tr>
+					<td>SPM Perakaunan & Igcse Accounting</td>
+					<td>online and offline</td>
+					<td>MS Jackie</td>
+					<td>014-2393318</td>
+					<td>Kepong<br>Segambut</td>
+					<td>SPM<br>IGCSE</td>
+				</tr>
+				<tr>
+					<td>英文，历史</td>
+					<td>online</td>
+					<td>Teoh Wan Choon</td>
+					<td>016-4413536</td>
+					<td>Batang Kali</td>
+					<td>SMK</td>
+				</tr>
+				<tr>
+					<td>BM 和 华语</td>
+					<td>online and offline</td>
+					<td>Teacher Stephanie</td>
+					<td>016-2619929</td>
+					<td>Cheras</td>
+					<td>SMK</td>
+				</tr>
+				<tr>
+					<td>BM, Sejarah, Maths, Geografi</td>
+					<td>online and offline</td>
+					<td>Teacher Stanley</td>
+					<td>012-2203383</td>
+					<td>Kepong</td>
+					<td>SMK 国中</td>
+				</tr>
+				<tr>
+					<td>数学</td>
+					<td>offline</td>
+					<td>Mr Chai</td>
+					<td>018-311 4711</td>
+					<td>Kuala Lumpur</td>
+					<td>IGCSE</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+	</div>
+</div>
+<div style="height: 50px">&nbsp;</div>
+<div class="button"><a href="https://forms.gle/amszuDbK5tw5j7K1A" target="_blank">Recommend my tutor</a></div>
+	
+<script>
+function searchTable() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let table = document.getElementById("dataTable");
+    let tr = table.getElementsByTagName("tr");
+    let clearBtn = document.querySelector(".clear-btn");
+
+    clearBtn.style.display = input ? "block" : "none";
+
+    for (let i = 1; i < tr.length; i++) {
+        let tds = tr[i].getElementsByTagName("td");
+        let found = false;
+
+        for (let j = 0; j < tds.length; j++) {
+            tr[i].classList.remove("highlight");
+
+            if (tds[j].innerText.toLowerCase().includes(input)) {
+                found = true;
+            }
+        }
+
+        if (found || input === "") {
+            tr[i].style.display = "";
+            if (input !== "") {
+                tr[i].classList.add("highlight");
+            }
+        } else {
+            tr[i].style.display = "none";
+        }
+    }
+}
+
+function clearSearch() {
+    let input = document.getElementById("searchInput");
+    input.value = "";
+    searchTable();
+    input.focus();
+}
+</script>
+
+</body>
+</html>
